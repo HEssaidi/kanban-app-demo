@@ -14,11 +14,30 @@
         </div>
         <div class="board-wrapper">
             <div class="board-columns">
-                <div class="board-column">
+                <div class="board-column"
+                    cdkDropList
+                    #todoList="cdkDropList"
+                    [cdkDropListData]="todo"
+                    [cdkDropListConnectedTo]="[doneList]"
+                    class="example-list"
+                    (cdkDropListDropped)="drop($event)"
+                >
                     <div class="column-title">
                        ToDo 
                     </div>
                     <div class="tasks-container">
+                        <div class="task">
+                            This is a pretty task !!
+                        </div>
+                        <div class="task">
+                            This is a pretty task !!
+                        </div>
+                        <div class="task">
+                            This is a pretty task !!
+                        </div>
+                        <div class="task">
+                            This is a pretty task !!
+                        </div>
                         <div class="task">
                             This is a pretty task !!
                         </div>
