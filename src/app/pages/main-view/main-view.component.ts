@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import { Board } from 'src/app/models/board.model';
 import { Column } from 'src/app/models/column.model';
+import { ColumnServiceService } from 'src/app/services/column-service.service';
 @Component({
   selector: 'app-main-view',
   templateUrl: './main-view.component.html',
@@ -9,27 +10,22 @@ import { Column } from 'src/app/models/column.model';
 })
 export class MainViewComponent implements OnInit {
 
-  constructor() { }
+  public columns: Column[]=[];
+  constructor(private columnService: ColumnServiceService) { }
 
-  board: Board = new Board("API management 2", [
-    new Column('Todo', [
-      "create sequence diagram",
-      "generate mapStruct structure",
-      "fix bulma package error"
-    ]),
-    new Column('Doing', [
-      "debug cdk package error",
-      "create class diagram",
-    ]),
-    new Column('DONE', [
-      "create github repo",
-      "create project socle",
-      "push project to the repo"
-    ]),
-  ])
+ 
   ngOnInit(): void {
+    this.getAllColumns()
   }
 
+  public getAllColumns(): void {
+    this.columnService.getColumns().subscribe(
+      (response: Column[]) => {
+        this.columns=response
+        console.log(this.columns)
+      }
+    )
+  }
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
